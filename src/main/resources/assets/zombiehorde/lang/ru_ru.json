@@ -1,0 +1,10 @@
+{
+  "item.zombiehorde.reward_bag": "Мешочек с наградой",
+  "tooltip.zombiehorde.reward_bag": "ПКМ: случайный лут, опыт и временный положительный эффект.",
+  "entity.zombiehorde.runner_zombie": "Зомби-бегун",
+  "entity.zombiehorde.brute_zombie": "Зомби-громила",
+  "entity.zombiehorde.plague_zombie": "Чумной зомби",
+  "entity.zombiehorde.ember_zombie": "Огненный зомби",
+  "message.zombiehorde.wave": "Волна орды %1$s! Рядом появилось зомби: %2$s.",
+  "message.zombiehorde.reward": "Мешочек с наградой открыт!"
+}

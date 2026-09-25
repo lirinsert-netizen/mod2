@@ -1,0 +1,10 @@
+{
+  "item.zombiehorde.reward_bag": "Horde Reward Bag",
+  "tooltip.zombiehorde.reward_bag": "Right-click to receive random loot, XP and a temporary buff.",
+  "entity.zombiehorde.runner_zombie": "Runner Zombie",
+  "entity.zombiehorde.brute_zombie": "Brute Zombie",
+  "entity.zombiehorde.plague_zombie": "Plague Zombie",
+  "entity.zombiehorde.ember_zombie": "Ember Zombie",
+  "message.zombiehorde.wave": "Horde wave %1$s! %2$s zombies spawned nearby.",
+  "message.zombiehorde.reward": "The reward bag bursts open!"
+}
