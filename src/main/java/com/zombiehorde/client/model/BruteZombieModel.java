@@ -18,50 +18,84 @@ public final class BruteZombieModel extends ZombieModel<BruteZombie> {
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition mesh = HumanoidModel.createMesh(new CubeDeformation(0.45F), 0.0F);
+        MeshDefinition mesh = HumanoidModel.createMesh(new CubeDeformation(0.35F), 0.0F);
         PartDefinition root = mesh.getRoot();
 
-        root.getChild("head").addOrReplaceChild("jaw_plate",
-                CubeListBuilder.create()
-                        .texOffs(32, 0)
-                        .addBox(-4.0F, -1.0F, -5.5F, 8.0F, 3.0F, 2.0F),
+        PartDefinition head = root.getChild("head");
+        head.addOrReplaceChild("helmet_brow",
+                CubeListBuilder.create().texOffs(0, 32)
+                        .addBox(-4.5F, -8.5F, -5.0F, 9.0F, 3.0F, 2.0F),
+                PartPose.ZERO);
+        head.addOrReplaceChild("jaw_plate",
+                CubeListBuilder.create().texOffs(22, 32)
+                        .addBox(-4.0F, -0.5F, -5.2F, 8.0F, 3.0F, 2.0F),
                 PartPose.ZERO);
 
-        root.getChild("body").addOrReplaceChild("chest_plate",
-                CubeListBuilder.create()
-                        .texOffs(0, 32)
-                        .addBox(-5.5F, 0.0F, -3.6F, 11.0F, 13.0F, 2.0F),
+        PartDefinition body = root.getChild("body");
+        body.addOrReplaceChild("chest_plate",
+                CubeListBuilder.create().texOffs(0, 40)
+                        .addBox(-5.0F, 0.0F, -3.7F, 10.0F, 13.0F, 2.0F),
+                PartPose.ZERO);
+        body.addOrReplaceChild("back_plate",
+                CubeListBuilder.create().texOffs(24, 40)
+                        .addBox(-5.0F, 0.0F, 1.7F, 10.0F, 13.0F, 2.0F),
+                PartPose.ZERO);
+        body.addOrReplaceChild("belt",
+                CubeListBuilder.create().texOffs(48, 40)
+                        .addBox(-5.0F, 9.0F, -3.2F, 10.0F, 3.0F, 6.0F),
                 PartPose.ZERO);
 
-        root.getChild("right_arm").addOrReplaceChild("shoulder",
-                CubeListBuilder.create()
-                        .texOffs(32, 5)
-                        .addBox(-5.7F, -3.0F, -3.2F, 5.0F, 4.0F, 5.0F),
+        PartDefinition rightArm = root.getChild("right_arm");
+        rightArm.addOrReplaceChild("shoulder",
+                CubeListBuilder.create().texOffs(0, 55)
+                        .addBox(-5.4F, -3.0F, -3.2F, 5.0F, 5.0F, 5.0F),
+                PartPose.ZERO);
+        rightArm.addOrReplaceChild("gauntlet",
+                CubeListBuilder.create().texOffs(20, 55)
+                        .addBox(-4.0F, 6.5F, -3.2F, 4.0F, 4.0F, 5.0F),
                 PartPose.ZERO);
 
-        root.getChild("left_arm").addOrReplaceChild("shoulder",
-                CubeListBuilder.create()
-                        .texOffs(32, 5)
-                        .mirror()
-                        .addBox(0.7F, -3.0F, -3.2F, 5.0F, 4.0F, 5.0F)
-                        .mirror(false),
+        PartDefinition leftArm = root.getChild("left_arm");
+        leftArm.addOrReplaceChild("shoulder",
+                CubeListBuilder.create().texOffs(0, 55).mirror()
+                        .addBox(0.4F, -3.0F, -3.2F, 5.0F, 5.0F, 5.0F).mirror(false),
+                PartPose.ZERO);
+        leftArm.addOrReplaceChild("gauntlet",
+                CubeListBuilder.create().texOffs(20, 55).mirror()
+                        .addBox(0.0F, 6.5F, -3.2F, 4.0F, 4.0F, 5.0F).mirror(false),
                 PartPose.ZERO);
 
-        return LayerDefinition.create(mesh, 64, 64);
+        PartDefinition rightLeg = root.getChild("right_leg");
+        rightLeg.addOrReplaceChild("shin_guard",
+                CubeListBuilder.create().texOffs(38, 55)
+                        .addBox(-2.5F, 3.5F, -2.7F, 4.0F, 7.0F, 1.0F),
+                PartPose.ZERO);
+
+        PartDefinition leftLeg = root.getChild("left_leg");
+        leftLeg.addOrReplaceChild("shin_guard",
+                CubeListBuilder.create().texOffs(38, 55).mirror()
+                        .addBox(-1.5F, 3.5F, -2.7F, 4.0F, 7.0F, 1.0F).mirror(false),
+                PartPose.ZERO);
+
+        return LayerDefinition.create(mesh, 80, 64);
     }
 
     @Override
     public void setupAnim(BruteZombie entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setupAnim(entity, limbSwing, limbSwingAmount * 0.55F, ageInTicks, netHeadYaw, headPitch);
+        super.setupAnim(entity, limbSwing, limbSwingAmount * 0.7F, ageInTicks, netHeadYaw, headPitch);
 
-        this.body.zRot = 0.0F;
-
-        float idleSway = Mth.sin(ageInTicks * 0.08F) * 0.04F;
-        this.body.zRot = idleSway;
-        this.rightArm.zRot += 0.1F + idleSway;
-        this.leftArm.zRot -= 0.1F + idleSway;
-        this.rightLeg.xRot *= 0.7F;
-        this.leftLeg.xRot *= 0.7F;
+        float stomp = Mth.sin(limbSwing * 0.5F) * 0.06F * limbSwingAmount;
+        this.body.zRot = Mth.sin(ageInTicks * 0.08F) * 0.03F;
+        this.body.y = Math.abs(stomp) * 4.0F;
+        this.head.y = this.body.y * 0.35F;
+        this.rightLeg.xRot *= 0.75F;
+        this.leftLeg.xRot *= 0.75F;
+        this.rightArm.zRot += 0.10F;
+        this.leftArm.zRot -= 0.10F;
+        if (entity.isAggressive()) {
+            this.rightArm.xRot -= 0.25F;
+            this.leftArm.xRot -= 0.25F;
+        }
         this.hat.copyFrom(this.head);
     }
 }
